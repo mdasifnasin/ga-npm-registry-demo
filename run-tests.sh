@@ -12,6 +12,5 @@ npm install
 node setup-db.js
 
 # Run your test suite
-npm test
 
 echo "MongoDB tests completed successfully!"

@@ -29,3 +29,22 @@ jobs:
           run: npm publish
           env:
             NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+
+    test:
+      runs-on: ubuntu-latest
+      services:
+        mongodb:
+          image: mongo:5
+          ports:
+            - 27017:27017
+      steps:
+        - name: Wait for MongoDB to be ready
+          run: |
+            echo "Waiting for MongoDB..."
+            until nc -z localhost 27017; do
+              sleep 2
+            done
+        - name: Run tests
+          run: ./run-tests.sh
+      

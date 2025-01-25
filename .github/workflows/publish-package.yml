@@ -1,11 +1,15 @@
 name: Publish Package to GitHub NPM Registry
 
 on: 
+  workflow_dispatch: 
   release: 
     types: published
     
 jobs:
     test-publish-package:
+      permissions: 
+        packages: write
+        contents: write
       runs-on: ubuntu-latest
       steps:
         - name: Checkout Repository
@@ -15,6 +19,12 @@ jobs:
           uses: actions/setup-node@v4
           with:
             node-version: '20.x'
+            registry-url: 'https://npm.pkg.github.com'
             
         - name: Install Dependencies
           run: npm install
+
+        - name: Pulish the Package
+          run: npm publish
+          env:
+            NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

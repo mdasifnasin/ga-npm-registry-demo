@@ -39,6 +39,9 @@ jobs:
           ports:
             - 27017:27017
       steps:
+        - name: Checkout
+          uses: actions/checkout@v4
+
         - name: Wait for MongoDB to be ready
           run: |
             echo "Waiting for MongoDB..."
@@ -47,4 +50,4 @@ jobs:
             done
         - name: Run tests
           run: ./run-tests.sh
-      
+
